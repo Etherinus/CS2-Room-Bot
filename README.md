@@ -1,4 +1,4 @@
-# FlexRoom Bot: Discord Voice Channels Manager
+# CS2 Room Bot: Discord Voice Channels Manager
 
 This project is a Discord bot that allows you to quickly create temporary voice channels for finding teammates (Faceit, CS2 Premier, etc.) and manage private rooms (closing access, setting user limits, granting/revoking moderator privileges, and much more). It can easily be adapted for any gaming community or server—not limited to CS2.
 
