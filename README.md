@@ -103,7 +103,7 @@ This project is a Discord bot that allows you to quickly create temporary voice 
 
 ## License
 
-This project is provided under the FlexRoom Bot License, which allows you to modify and distribute the software. However, you are **not permitted** to sell or commercially exploit this bot without explicit permission from the original author(s).
+This project is provided under the CS2 Room Bot License, which allows you to modify and distribute the software. However, you are **not permitted** to sell or commercially exploit this bot without explicit permission from the original author(s).
 
 ```
 --- FlexRoom Bot License ---
