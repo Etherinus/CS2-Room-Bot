@@ -5,13 +5,13 @@ This project is a Discord bot that allows you to quickly create temporary voice 
 ## Screenshots
 
 1. **Created Voice Channel and “Teammate Search” embed**  
-   ![Teammate Search Example](https://media.discordapp.net/attachments/1176926263911395441/1346716620382539808/Discord_9nUIv5PAYc.png?ex=67c93317&is=67c7e197&hm=2c3598dd95e406daa6c8ef203e8f3b732fa281fbd9378a6786d84074ecb227e7&=&format=webp&quality=lossless&width=797&height=506)
+   ![Teammate Search Example](https://media.discordapp.net/attachments/1085796300185935912/1349184934920716380/Discord_9nUIv5PAYc.png?ex=67d22de3&is=67d0dc63&hm=b8b3c3beea73cce4adeac869c302ec3f14e9133ee75a351320afd9aa92744c4d&=&format=webp&quality=lossless&width=797&height=506)
 
 2. **Categories and Channels Structure (Teammate Search / Private Rooms)**  
-   ![Channel Structure](https://media.discordapp.net/attachments/1176926263911395441/1346716626141184031/Discord_oNghMccnDk.png?ex=67c93318&is=67c7e198&hm=8a7fdf9ffbf9621a97cdbfd2676aca92638661b8c06eab5e469192f0bb9f6986&=&format=webp&quality=lossless&width=518&height=698)
+   ![Channel Structure](https://media.discordapp.net/attachments/1085796300185935912/1349184935478558832/Discord_oNghMccnDk.png?ex=67d22de3&is=67d0dc63&hm=e18e20cd018bfec7b8622ad2e592cda488923d960547f6fb5ce5bc35d84e3089&=&format=webp&quality=lossless&width=518&height=698)
 
 3. **Private Room Management Panel**  
-   ![Private Room Management](https://media.discordapp.net/attachments/1176926263911395441/1345322077393256509/Discord_lLD9ZWCTE9.png?ex=67c42052&is=67c2ced2&hm=7a848657da5da858279679900fdb8b37cd59d4c27ae038167900ceddd1f5adaf&=&format=webp&quality=lossless&width=842&height=800)
+   ![Private Room Management](https://media.discordapp.net/attachments/1085796300185935912/1349184935235162153/Discord_lLD9ZWCTE9.png?ex=67d22de3&is=67d0dc63&hm=8d93755bc30067e10dfd913dce91e602c2719c2c6dc3bd057d847d49f46c5a66&=&format=webp&quality=lossless&width=842&height=800)
 
 ## Installation and Setup
 
