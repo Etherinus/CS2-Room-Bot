@@ -5,21 +5,21 @@ This project is a Discord bot that allows you to quickly create temporary voice 
 ## Screenshots
 
 1. **Created Voice Channel and “Teammate Search” embed**  
-   ![Teammate Search Example](https://media.discordapp.net/attachments/1085796300185935912/1349184934920716380/Discord_9nUIv5PAYc.png?ex=67d22de3&is=67d0dc63&hm=b8b3c3beea73cce4adeac869c302ec3f14e9133ee75a351320afd9aa92744c4d&=&format=webp&quality=lossless&width=797&height=506)
+   ![Teammate Search Example](https://i.imgur.com/LMso7LL.png)
 
 2. **Categories and Channels Structure (Teammate Search / Private Rooms)**  
-   ![Channel Structure](https://media.discordapp.net/attachments/1085796300185935912/1349184935478558832/Discord_oNghMccnDk.png?ex=67d22de3&is=67d0dc63&hm=e18e20cd018bfec7b8622ad2e592cda488923d960547f6fb5ce5bc35d84e3089&=&format=webp&quality=lossless&width=518&height=698)
+   ![Channel Structure](https://i.imgur.com/ldE6Klm.png)
 
 3. **Private Room Management Panel**  
-   ![Private Room Management](https://media.discordapp.net/attachments/1085796300185935912/1349184935235162153/Discord_lLD9ZWCTE9.png?ex=67d22de3&is=67d0dc63&hm=8d93755bc30067e10dfd913dce91e602c2719c2c6dc3bd057d847d49f46c5a66&=&format=webp&quality=lossless&width=842&height=800)
+   ![Private Room Management](https://i.imgur.com/BjrSWZh.png)
 
 ## Installation and Setup
 
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/etherinus/flexroom-bot.git
-   cd flexroom-bot
+   git clone https://github.com/etherinus/cs2-room-bot.git
+   cd cs2-room-bot
    ```
 
 2. **Install dependencies**:
@@ -106,7 +106,7 @@ This project is a Discord bot that allows you to quickly create temporary voice 
 This project is provided under the CS2 Room Bot License, which allows you to modify and distribute the software. However, you are **not permitted** to sell or commercially exploit this bot without explicit permission from the original author(s).
 
 ```
---- FlexRoom Bot License ---
+--- CS2 Room Bot License ---
 
 Copyright (c) 2025 Thomas Rendes (aka Etherinus)
 
