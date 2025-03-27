@@ -1,13 +1,49 @@
 {
-  "name": "flexroom-bot",
-  "avtor": "Etherinus",
+  "name": "cs2-room-bot",
   "version": "1.0.0",
+  "description": "Discord bot for managing temporary team search channels and persistent private voice rooms using MongoDB.",
   "main": "src/index.js",
+  "author": "Etherinus (Thomas Rendes)",
+  "license": "SEE LICENSE IN README.md",
+  "private": true,
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "register": "node src/utils/registerCommands.js",
+    "lint": "eslint .",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "discord.js": "^14.18.0",
-    "dotenv": "^16.4.7"
-  }
+    "dotenv": "^16.4.7",
+    "mongoose": "^7.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.52.0",
+    "nodemon": "^3.1.0",
+    "prettier": "^3.1.0",
+    "prettier-eslint": "^16.1.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "discord.js",
+    "voice channel",
+    "private room",
+    "team search",
+    "mongodb",
+    "mongoose",
+    "cs2"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/etherinus/cs2-room-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/etherinus/cs2-room-bot/issues"
+  },
+  "homepage": "https://github.com/etherinus/cs2-room-bot#readme"
 }

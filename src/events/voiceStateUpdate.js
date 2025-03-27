@@ -1,88 +1,126 @@
-const { ChannelType } = require('discord.js');
-const { state } = require('../utils/state');
-const { createEphemeralRoom, updateRoomMessage, cleanUpEphemeralRoom } = require('../utils/searchUtils');
-const { createPrivateRoom, cleanUpPrivateRoom } = require('../utils/privateUtils');
+const { ChannelType } = require("discord.js");
+const {
+  createEphemeralRoom,
+  updateRoomMessage,
+  cleanUpEphemeralRoom,
+} = require("../utils/searchUtils");
+const {
+  createPrivateRoom,
+  cleanUpPrivateRoom,
+} = require("../utils/privateUtils");
+const GuildConfig = require("../database/models/GuildConfig");
+const EphemeralRoom = require("../database/models/EphemeralRoom");
+const PrivateRoom = require("../database/models/PrivateRoom");
 
 module.exports = {
-  name: 'voiceStateUpdate',
+  name: "voiceStateUpdate",
   async execute(oldState, newState, client) {
     const guild = newState.guild || oldState.guild;
-    if (!guild) {
-      return;
-    }
+    if (!guild) return;
 
-    let member = newState.member;
-    if (!member) {
-      member = await guild.members.fetch(newState.id).catch(() => null);
-    }
-    if (!member) {
-      return;
-    }
+    const member =
+      newState.member ??
+      (await guild.members.fetch(newState.id).catch(() => null));
+    if (!member || member.user.bot) return;
 
-    if (oldState.channelId && !oldState.channel) {
-      oldState.channel = await guild.channels.fetch(oldState.channelId).catch(() => null);
-    }
-    if (newState.channelId && !newState.channel) {
-      newState.channel = await guild.channels.fetch(newState.channelId).catch(() => null);
-    }
+    const oldChannelId = oldState.channelId;
+    const newChannelId = newState.channelId;
+    const oldChannel = oldState.channel;
+    const newChannel = newState.channel;
+    const guildId = guild.id;
+
+    const config = await GuildConfig.findOne({ guildId });
+    if (!config) return;
 
     try {
-      if (newState.channel && Object.values(state.searchSetupChannels).includes(newState.channel.id)) {
+      if (
+        newChannelId &&
+        !oldChannelId &&
+        config.searchSetupChannels &&
+        Object.values(config.searchSetupChannels).includes(newChannelId)
+      ) {
         try {
-          const { voice } = await createEphemeralRoom(guild, newState.channel.name, member);
-          if (voice) {
-            await newState.setChannel(voice);
-            await updateRoomMessage(guild, voice.id);
+          const { voiceChannel } = await createEphemeralRoom(
+            guild,
+            newChannel.name,
+            member,
+            config,
+          );
+          if (voiceChannel) {
+            await newState.setChannel(voiceChannel);
           }
-        } catch (err) {}
-      } else if (!oldState.channelId && newState.channelId && newState.channel) {
-        if (state.ephemeralRooms[newState.channel.id]) {
-          await updateRoomMessage(guild, newState.channel.id);
+        } catch (err) {
+          console.error(
+            `Error creating ephemeral room from ${newChannel.name}:`,
+            err,
+          );
         }
       }
 
-      if (oldState.channelId && newState.channelId && oldState.channelId !== newState.channelId) {
-        if (oldState.channel && state.ephemeralRooms[oldState.channel.id]) {
-          await updateRoomMessage(guild, oldState.channel.id);
+      if (newChannelId && newChannelId !== oldChannelId) {
+        const joinedRoom = await EphemeralRoom.findOne({
+          guildId,
+          voiceChannelId: newChannelId,
+        });
+        if (joinedRoom) {
+          await updateRoomMessage(guild, newChannelId, config);
         }
-        if (newState.channel && state.ephemeralRooms[newState.channel.id]) {
-          await updateRoomMessage(guild, newState.channel.id);
-        }
-        if (state.ephemeralRooms[oldState.channelId]) {
-          const oldCh = oldState.channel;
-          if (!oldCh || oldCh.members.size === 0) {
-            await cleanUpEphemeralRoom(guild, oldState.channelId);
+      }
+
+      if (oldChannelId && oldChannelId !== newChannelId) {
+        const leftRoomData = await EphemeralRoom.findOne({
+          guildId,
+          voiceChannelId: oldChannelId,
+        });
+        if (leftRoomData) {
+          const leftChannel =
+            oldChannel ??
+            (await guild.channels.fetch(oldChannelId).catch(() => null));
+          if (leftChannel && leftChannel.members.size === 0) {
+            await cleanUpEphemeralRoom(guild, oldChannelId, config);
+          } else if (leftChannel) {
+            await updateRoomMessage(guild, oldChannelId, config);
           }
         }
       }
 
-      if (oldState.channelId && !newState.channelId) {
-        if (state.ephemeralRooms[oldState.channelId]) {
-          const ch = oldState.channel;
-          if (ch && ch.members.size > 0) {
-            await updateRoomMessage(guild, oldState.channelId);
-          } else {
-            await cleanUpEphemeralRoom(guild, oldState.channelId);
+      if (
+        newChannelId &&
+        newChannelId === config.privateCreateChannelId &&
+        newChannel?.parentId === config.privateCategoryId
+      ) {
+        try {
+          const voiceChannel = await createPrivateRoom(guild, member, config);
+          if (voiceChannel) {
+            await newState.setChannel(voiceChannel);
           }
-        }
-        if (state.privateRooms[oldState.channelId]) {
-          await cleanUpPrivateRoom(guild, oldState.channelId);
+        } catch (err) {
+          console.error(
+            `Error creating private room for ${member.user.tag}:`,
+            err,
+          );
         }
       }
 
-      if (newState.channelId && newState.channel) {
-        if (
-          newState.channel.name === 'Create Room' &&
-          newState.channel.parent?.name === 'Private Rooms'
-        ) {
-          try {
-            const voiceChannel = await createPrivateRoom(guild, member);
-            if (voiceChannel) {
-              await newState.setChannel(voiceChannel);
-            }
-          } catch (err) {}
+      if (oldChannelId && oldChannelId !== newChannelId) {
+        const leftPrivateRoom = await PrivateRoom.findOne({
+          guildId,
+          voiceChannelId: oldChannelId,
+        });
+        if (leftPrivateRoom) {
+          const leftChannel =
+            oldChannel ??
+            (await guild.channels.fetch(oldChannelId).catch(() => null));
+          if (leftChannel && leftChannel.members.size === 0) {
+            await cleanUpPrivateRoom(guild, oldChannelId);
+          }
         }
       }
-    } catch (globalErr) {}
+    } catch (error) {
+      console.error(
+        `Error during voiceStateUpdate for guild ${guildId}:`,
+        error,
+      );
+    }
   },
 };
